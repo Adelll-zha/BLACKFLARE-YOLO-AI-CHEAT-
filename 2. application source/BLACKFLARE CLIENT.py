@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 # Chargement des bibliothèques DLL
 interception_dll = ctypes.cdll.LoadLibrary("./interception.dll")
-dll = ctypes.WinDLL('./BLACKFLARE  DRIVER.dll')
+dll = ctypes.WinDLL('./BLACKFLARE DRIVER.dll')
 dll.move_mouse.restype = None
 
 # Définition des valeurs par défaut
