@@ -9,12 +9,12 @@ import ctypes
 
 app = Flask(__name__)
 
-# Chargement des bibliothèques DLL
+# Load DLL
 interception_dll = ctypes.cdll.LoadLibrary("./interception.dll")
 dll = ctypes.WinDLL('./lib.dll')
 dll.move_mouse.restype = None
 
-# Définition des valeurs par défaut
+# Set value to default
 ellipse_a = 40
 ellipse_b = 40
 speed = 3
@@ -22,7 +22,7 @@ head_switch_threshold = 10
 delay = 0
 head_point = 'head'
 
-# Variable pour stocker l'état de la détection
+# Variable to store detection status
 detection_running = False
 
 @app.route('/', methods=['GET', 'POST'])
@@ -41,7 +41,7 @@ def index():
 def start():
     global detection_running
     detection_running = True
-    # Code de détection d'objets et de mouvement de souris
+    # Object detection and mouse movement code
     model = yolov5.load('latop.pt')
     model.conf = 0.15
     model.iou = 0.45
@@ -92,8 +92,8 @@ def start():
                 # check if the head point is inside the ellipse
                 ellipse_x, ellipse_y = 1920 // 2, 1080 // 2
                 if abs(head_x - prev_head_x) > head_switch_threshold or prev_head_x == 0:
-                    # Si la tête actuelle est suffisamment éloignée de la tête précédente ou si c'est la première tête détectée,
-                    # on se concentre sur cette tête.
+                    # If the current head is far enough away from the previous head, or if it's the first head detected,
+                    # we focus on this head.
                     prev_head_x = head_x
                     if (head_x - ellipse_x)**2 / ellipse_a**2 + (head_y - ellipse_y)**2 / ellipse_b**2 <= 1:
                         distance_x = head_x - 1920 // 2
