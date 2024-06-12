@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 # Chargement des bibliothèques DLL
 interception_dll = ctypes.cdll.LoadLibrary("./interception.dll")
-dll = ctypes.WinDLL('./BLACKFLARE DRIVER.dll')
+dll = ctypes.WinDLL('./lib.dll')
 dll.move_mouse.restype = None
 
 # Définition des valeurs par défaut
@@ -79,7 +79,7 @@ def start():
 
                 if head_point == 'head':
                     head_x = int((x1 + x2) / 2)
-                    head_y = int(y1 + 0.05 * (y2 - y1))
+                    head_y = int(y1 + 0.1 * (y2 - y1))
                 if head_point == 'neck':
                     head_x = int((x1 + x2) / 2)
                     head_y = int(y1 + 0.2 * (y2 - y1))
